@@ -21,6 +21,7 @@ import argparse
 import datetime
 import os
 import math
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import sys
@@ -45,7 +46,7 @@ SAE_LOSS = 'mse'
 #------------------------------------------------------------------------
 # classifier
 #------------------------------------------------------------------------
-CLASSIFIER_ACTIVATION = 'relu'
+CLASSIFIER_ACTIVATION = 'selu'
 # CLASSIFIER_ACTIVATION = 'tanh'
 CLASSIFIER_BIAS = False
 # CLASSIFIER_OPTIMIZER = 'adam'
@@ -82,13 +83,13 @@ if __name__ == "__main__":
         "-E",
         "--epochs",
         help="number of epochs; default is 20",
-        default=20,
+        default=200,
         type=int)
     parser.add_argument(
         "-B",
         "--batch_size",
         help="batch size; default is 10",
-        default=10,
+        default=256,
         type=int)
     parser.add_argument(
         "-T",
@@ -224,7 +225,33 @@ if __name__ == "__main__":
 
     # train the model
     startTime = timer()
-    model.fit(x_train, y_train, validation_data=(x_val, y_val), batch_size=batch_size, epochs=epochs, verbose=VERBOSE)
+    history=model.fit(x_train, y_train, validation_data=(x_val, y_val), batch_size=batch_size, epochs=epochs, verbose=VERBOSE)
+
+# list all data in history
+    print(history.history.keys())
+
+    # plot accuracy amd loss
+    fig = plt.figure()
+    ax1 = fig.add_subplot(211)
+    ax2 = fig.add_subplot(212)
+
+    ax1.plot(history.history['acc'])
+    ax1.plot(history.history['val_acc'])
+    # ax1.title('model accuracy')
+    ax1.set_xlabel('epoch')
+    ax1.set_ylabel('accuracy')
+    ax1.legend(['train', 'validation'], loc='lower right')
+    
+    ax2.plot(history.history['loss'])
+    ax2.plot(history.history['val_loss'])
+    # ax2.title('model loss')
+    ax2.set_xlabel('epoch')
+    ax2.set_ylabel('loss')
+    ax2.legend(['train', 'validation'], loc='upper right')
+
+    plt.tight_layout()
+    plt.show()
+    
 
     elapsedTime = timer() - startTime
     print("Model trained in %e s." % elapsedTime)
