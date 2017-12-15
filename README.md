@@ -23,11 +23,13 @@ Stacked autoencoders (SAE) are parts of the deep network used to reduce the dime
 As figure 1 shows the used SAE (blue) with additional decoder part (red) Stacked autoencoder (SAE) used in DNN to determine floor and building. The input to SAE are signal strengths detected in a scan with one value for each network visible in the training database. The output of decoder is the reconstructed input from reduced representation. The HL stands for hidden layer and the numbers in parentheses represent the number of neurons in the layer
 
 :![](materials/1.png)
+
 **Figure 1** 
 
 And figure 2 shows Architecture of DNN with SAE used to classify building and floor based on provided input WiFi scan. The already pre-trained encoder part is connected to classifier. The numbers in parentheses represent the number of neurons in the layer
 
 :![](materials/2.png)
+
 **Figure 2**
 
 ## **Analysis and discussion**
@@ -54,30 +56,37 @@ Moreover, if the Batch Size equals to one that means each circulation only train
 The figure 3 shows the accuracy original file is equals closely to sixty percent. Firstly, I only changed the Batch Size equals to fifty, the accuracy changed to fifty eight percent that as shown in the figure 4. And then, I changed the Batch Size equals to two hundred, the accuracy will changed to that as shown in figure 5. Theoretically, increase the number of Batch Size within reasonable limits can increase the accuracy in a certain extent. However only change the number of Batch Size cannot increase the Batch Size that maybe will be decided by any other parameters. Moreover, if we promote the batch size blindly that will make some problems. Firstly, the lower memory capacity caused by the higher memory percent utilization, and then when the batch size increased a point, the descent direction will be not changed. 
 
 :![](materials/3.png)
+
 **Figure 3** 
 
 :![](materials/4.png)
+
 **Figure 4** 
 
 :![](materials/5.png)
+
 **Figure 5** 
 
 
 For the figure 6 and figure 7, it is a favorable results for improve the accuracy. 
 
 :![](materials/6.png)
+
 **Figure 6** 
 
 :![](materials/7.png)
+
 **Figure 7** 
 
 ### **Epochs**
 The epoch is another parameter for deep learning. Total number of steps (batches of samples) before declaring one epoch finished and starting the next epoch. When training with input tensors such as TensorFlow data tensors, the default none is equal to the number of samples in your dataset divided by the batch size, or one if that cannot be determined. And then I try to change the number of epoch to two hundred and change the number of Batch Size to two hundred, because if only reduce the number of batch size not only that will make little sense but also it will running slowly. So look at this figure 8, the accuracy has been significantly improved, that means there are any relationship of two variates, and then I changed the Batch Size to one thousand, the result of it is very unsatisfactory that shown as this figure 9, the accuracy is too small.
 
 :![](materials/8.png)
+
 **Figure 8** 
 
 :![](materials/9.png)
+
 **Figure 9** 
 
 ### **Classifier layers**
@@ -88,13 +97,14 @@ For this layer, the original layers is 128-256-512, reduce the dimension ,whatev
 For figure 10, compare the original we can see the accuracy of elu, selu, relu and linear has improve obviously 
 
 :![](materials/10.png)
+
 **Figure 10** 
 
 ### **Classifier optimizer**
-For this section,  there are also several function as same as ¡®adagrad¡¯, however there a little  changes for accuracy, so I am no longer continue to change it
+For this section,  there are also several function as same as Â¡Â®adagradÂ¡Â¯, however there a little  changes for accuracy, so I am no longer continue to change it
 
 ### **Dropout**
-The dropout is a specific value£¬ randomly drops connections between layers during training to force the net work to learn redundant representation and thus achieve better generalization and avoid overfitting.
+The dropout is a specific valueÂ£Â¬ randomly drops connections between layers during training to force the net work to learn redundant representation and thus achieve better generalization and avoid overfitting.
 
 ## **Conclusion**
 - Problems
